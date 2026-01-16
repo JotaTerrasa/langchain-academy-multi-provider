@@ -71,12 +71,9 @@ PS> $env:API_ENV_VAR = "your-api-key-here"
 Set the following environment variables:
 ```bash
 export LLM_PROVIDER="cerebras"
-export CEREBRAS_API_ENDPOINT="https://your-cerebras-endpoint.com/v1"
 export CEREBRAS_API_KEY="your-cerebras-api-key"
 export CEREBRAS_MODEL="llama-70b"  # Optional, defaults to llama-70b
 ```
-
-**Note:** Cerebras uses an OpenAI-compatible API endpoint. Make sure your endpoint URL points to the `/v1` path.
 
 ### Using Google Gemini
 
@@ -182,3 +179,4 @@ echo "TAVILY_API_KEY=\"$TAVILY_API_KEY\"" >> module-4/studio/.env
 ## Contributing
 
 This repository is based on the original [LangChain Academy](https://github.com/langchain-ai/langchain-academy) repository, with added multi-provider LLM support. Contributions are welcome!
+

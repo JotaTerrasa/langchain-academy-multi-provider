@@ -49,16 +49,8 @@ def get_llm(
 
 
 def _get_cerebras_llm(model: Optional[str], temperature: float) -> BaseChatModel:
-    """Create Cerebras LLM instance using OpenAI-compatible API."""
-    from langchain_openai import ChatOpenAI
-    
-    # Cerebras typically provides an OpenAI-compatible API endpoint
-    cerebras_endpoint = os.getenv("CEREBRAS_API_ENDPOINT")
-    if not cerebras_endpoint:
-        raise ValueError(
-            "CEREBRAS_API_ENDPOINT environment variable is required for Cerebras. "
-            "Set it to your Cerebras API endpoint URL."
-        )
+    """Create Cerebras LLM instance."""
+    from langchain_community.chat_models import ChatCerebras
     
     if model is None:
         model = os.getenv("CEREBRAS_MODEL", "llama-70b")
@@ -69,12 +61,8 @@ def _get_cerebras_llm(model: Optional[str], temperature: float) -> BaseChatModel
             "CEREBRAS_API_KEY environment variable is required for Cerebras"
         )
     
-    # Use ChatOpenAI with custom endpoint for Cerebras compatibility
-    return ChatOpenAI(
+    return ChatCerebras(
         model=model,
         temperature=temperature,
-        openai_api_base=cerebras_endpoint,
-        openai_api_key=cerebras_api_key
+        cerebras_api_key=cerebras_api_key
     )
-
-

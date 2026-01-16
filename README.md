@@ -69,12 +69,9 @@ PS> $env:API_ENV_VAR = "your-api-key-here"
 Set the following environment variables:
 ```bash
 export LLM_PROVIDER="cerebras"
-export CEREBRAS_API_ENDPOINT="https://your-cerebras-endpoint.com/v1"
 export CEREBRAS_API_KEY="your-cerebras-api-key"
 export CEREBRAS_MODEL="llama-70b"  # Optional, defaults to llama-70b
 ```
-
-**Note:** Cerebras uses an OpenAI-compatible API endpoint. Make sure your endpoint URL points to the `/v1` path.
 
 ### Switching Providers in Code
 
@@ -140,8 +137,8 @@ Open your browser and navigate to the Studio UI: `https://smith.langchain.com/st
 for i in {1..5}; do
   cp module-$i/studio/.env.example module-$i/studio/.env
   echo "LLM_PROVIDER=\"cerebras\"" > module-$i/studio/.env
-  echo "CEREBRAS_API_ENDPOINT=\"$CEREBRAS_API_ENDPOINT\"" >> module-$i/studio/.env
   echo "CEREBRAS_API_KEY=\"$CEREBRAS_API_KEY\"" >> module-$i/studio/.env
+  echo "CEREBRAS_MODEL=\"$CEREBRAS_MODEL\"" >> module-$i/studio/.env
 done
 echo "TAVILY_API_KEY=\"$TAVILY_API_KEY\"" >> module-4/studio/.env
 ```
@@ -159,3 +156,5 @@ echo "TAVILY_API_KEY=\"$TAVILY_API_KEY\"" >> module-4/studio/.env
 ## Contributing
 
 This repository is based on the original [LangChain Academy](https://github.com/langchain-ai/langchain-academy) repository, with added multi-provider LLM support. Contributions are welcome!
+
+

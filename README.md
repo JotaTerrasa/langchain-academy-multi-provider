@@ -28,8 +28,8 @@ python3 --version
 
 ### Clone repo
 ```
-git clone <your-repo-url>
-$ cd langchain-academy
+git clone https://github.com/JotaTerrasa/langchain-academy-multi-provider.git
+$ cd langchain-academy-multi-provider
 ```
 
 ### Create an environment and install dependencies

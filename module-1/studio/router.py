@@ -17,7 +17,7 @@ def multiply(a: int, b: int) -> int:
     return a * b
 
 # LLM with bound tool
-llm = get_llm(model="gpt-4o")
+llm = get_llm()
 llm_with_tools = llm.bind_tools([multiply])
 
 # Node

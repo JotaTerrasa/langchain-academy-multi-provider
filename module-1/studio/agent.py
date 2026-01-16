@@ -37,7 +37,7 @@ def divide(a: int, b: int) -> float:
 tools = [add, multiply, divide]
 
 # Define LLM with bound tools
-llm = get_llm(model="gpt-4o")
+llm = get_llm()
 llm_with_tools = llm.bind_tools(tools)
 
 # System message

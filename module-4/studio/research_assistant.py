@@ -16,7 +16,7 @@ from langgraph.graph import END, MessagesState, START, StateGraph
 
 ### LLM
 
-llm = get_llm(model="gpt-4o", temperature=0) 
+llm = get_llm(temperature=0) 
 
 ### Schema 
 

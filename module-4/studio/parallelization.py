@@ -15,7 +15,7 @@ from llm_factory import get_llm
 
 from langgraph.graph import StateGraph, START, END
 
-llm = get_llm(model="gpt-4o", temperature=0) 
+llm = get_llm(temperature=0) 
 
 class State(TypedDict):
     question: str

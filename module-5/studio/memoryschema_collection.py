@@ -16,7 +16,7 @@ from langgraph.store.base import BaseStore
 import configuration
 
 # Initialize the LLM
-model = get_llm(model="gpt-4o", temperature=0) 
+model = get_llm(temperature=0) 
 
 # Memory schema
 class Memory(BaseModel):

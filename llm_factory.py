@@ -2,14 +2,14 @@
 LLM Factory Module
 
 This module provides a factory function to create LLM instances
-for different providers: OpenAI, Cerebras, and Gemini.
+for different providers: Cerebras and Gemini.
 
 Usage:
     from llm_factory import get_llm
     
     # Use environment variable LLM_PROVIDER to select provider
-    # Options: "openai", "cerebras", "gemini"
-    llm = get_llm(model="gpt-4o", temperature=0)
+    # Options: "cerebras", "gemini"
+    llm = get_llm(model="llama-70b", temperature=0, provider="cerebras")
 """
 
 import os
@@ -28,39 +28,33 @@ def get_llm(
     Args:
         model: Model name (provider-specific)
         temperature: Temperature for the model
-        provider: LLM provider ("openai", "cerebras", "gemini")
+        provider: LLM provider ("cerebras", "gemini")
                   If None, uses LLM_PROVIDER environment variable
+                  If LLM_PROVIDER is not set, raises ValueError
     
     Returns:
         BaseChatModel instance configured for the selected provider
     """
     # Get provider from parameter or environment variable
     if provider is None:
-        provider = os.getenv("LLM_PROVIDER", "openai").lower()
+        provider = os.getenv("LLM_PROVIDER")
+        if provider is None:
+            raise ValueError(
+                "LLM_PROVIDER environment variable must be set. "
+                "Supported providers: 'cerebras', 'gemini'"
+            )
     
     provider = provider.lower()
     
-    if provider == "openai":
-        return _get_openai_llm(model, temperature)
-    elif provider == "cerebras":
+    if provider == "cerebras":
         return _get_cerebras_llm(model, temperature)
     elif provider == "gemini":
         return _get_gemini_llm(model, temperature)
     else:
         raise ValueError(
             f"Unknown provider: {provider}. "
-            "Supported providers: 'openai', 'cerebras', 'gemini'"
+            "Supported providers: 'cerebras', 'gemini'"
         )
-
-
-def _get_openai_llm(model: Optional[str], temperature: float) -> BaseChatModel:
-    """Create OpenAI LLM instance."""
-    from langchain_openai import ChatOpenAI
-    
-    if model is None:
-        model = os.getenv("OPENAI_MODEL", "gpt-4o")
-    
-    return ChatOpenAI(model=model, temperature=temperature)
 
 
 def _get_cerebras_llm(model: Optional[str], temperature: float) -> BaseChatModel:

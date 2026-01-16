@@ -10,11 +10,12 @@ In each module folder, you'll see a set of notebooks. A link to the LangChain Ac
 ## Multi-Provider LLM Support
 
 This repository has been refactored to support multiple LLM providers:
-- **OpenAI** (default)
 - **Cerebras**
 - **Google Gemini**
 
 The code uses a factory pattern (`llm_factory.py`) that allows you to switch between providers using environment variables or by specifying the provider directly.
+
+**Note:** You must set the `LLM_PROVIDER` environment variable to either "cerebras" or "gemini" before using the code.
 
 ## Setup
 
@@ -65,14 +66,6 @@ PS> $env:API_ENV_VAR = "your-api-key-here"
 
 ## LLM Provider Configuration
 
-### Using OpenAI (Default)
-
-Set `OPENAI_API_KEY` in your environment:
-```bash
-export OPENAI_API_KEY="your-openai-api-key"
-export LLM_PROVIDER="openai"  # Optional, this is the default
-```
-
 ### Using Cerebras
 
 Set the following environment variables:
@@ -106,9 +99,6 @@ You can also specify the provider directly in your code:
 ```python
 from llm_factory import get_llm
 
-# Use OpenAI
-llm = get_llm(model="gpt-4o", temperature=0, provider="openai")
-
 # Use Cerebras
 llm = get_llm(model="llama-70b", temperature=0, provider="cerebras")
 
@@ -119,7 +109,7 @@ llm = get_llm(model="gemini-pro", temperature=0, provider="gemini")
 ## Repository Branches
 
 This repository has three main branches:
-- **main**: Default branch with OpenAI support
+- **main**: Default branch (requires LLM_PROVIDER to be set)
 - **cerebras**: Branch configured for Cerebras provider
 - **gemini**: Branch configured for Gemini provider
 
@@ -168,7 +158,9 @@ Open your browser and navigate to the Studio UI: `https://smith.langchain.com/st
 ```
 for i in {1..5}; do
   cp module-$i/studio/.env.example module-$i/studio/.env
-  echo "OPENAI_API_KEY=\"$OPENAI_API_KEY\"" > module-$i/studio/.env
+  echo "LLM_PROVIDER=\"cerebras\"" > module-$i/studio/.env
+  echo "CEREBRAS_API_ENDPOINT=\"$CEREBRAS_API_ENDPOINT\"" >> module-$i/studio/.env
+  echo "CEREBRAS_API_KEY=\"$CEREBRAS_API_KEY\"" >> module-$i/studio/.env
 done
 echo "TAVILY_API_KEY=\"$TAVILY_API_KEY\"" >> module-4/studio/.env
 ```
@@ -186,10 +178,6 @@ echo "TAVILY_API_KEY=\"$TAVILY_API_KEY\"" >> module-4/studio/.env
 - Make sure you've enabled the Generative AI API in Google Cloud Console
 - Verify your API key is valid and has not expired
 - Some models may require specific regions or quotas
-
-**OpenAI:**
-- Ensure your API key is valid and has sufficient credits
-- Check rate limits if you encounter errors
 
 ## Contributing
 

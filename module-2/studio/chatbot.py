@@ -8,7 +8,7 @@ import sys
 import os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 from llm_factory import get_llm
-model = get_llm(model="gpt-4o", temperature=0) 
+model = get_llm(temperature=0) 
 
 # State class to store messages and summary
 class State(MessagesState):

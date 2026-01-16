@@ -11,11 +11,11 @@ In each module folder, you'll see a set of notebooks. A link to the LangChain Ac
 
 This repository has been refactored to support multiple LLM providers:
 - **Cerebras**
-- **Google cerebras**
+- **Google Gemini**
 
 The code uses a factory pattern (`llm_factory.py`) that allows you to switch between providers using environment variables or by specifying the provider directly.
 
-**Note:** You must set the `LLM_PROVIDER` environment variable to either "cerebras" or "cerebras" before using the code.
+**Note:** You must set the `LLM_PROVIDER` environment variable to either "cerebras" or "gemini" before using the code.
 
 ## Setup
 
@@ -75,13 +75,13 @@ export CEREBRAS_API_KEY="your-cerebras-api-key"
 export CEREBRAS_MODEL="llama-70b"  # Optional, defaults to llama-70b
 ```
 
-### Using Google cerebras
+### Using Google Gemini
 
 Set the following environment variables:
 ```bash
-export LLM_PROVIDER="cerebras"
+export LLM_PROVIDER="gemini"
 export GOOGLE_API_KEY="your-google-api-key"
-export cerebras_MODEL="cerebras-pro"  # Optional, defaults to cerebras-pro
+export GEMINI_MODEL="gemini-pro"  # Optional, defaults to gemini-pro
 ```
 
 To get a Google API key:
@@ -99,8 +99,8 @@ from llm_factory import get_llm
 # Use Cerebras
 llm = get_llm(model="llama-70b", temperature=0, provider="cerebras")
 
-# Use cerebras
-llm = get_llm(model="cerebras-pro", temperature=0, provider="cerebras")
+# Use Gemini
+llm = get_llm(model="gemini-pro", temperature=0, provider="gemini")
 ```
 
 ## Repository Branches
@@ -108,11 +108,11 @@ llm = get_llm(model="cerebras-pro", temperature=0, provider="cerebras")
 This repository has three main branches:
 - **main**: Default branch (requires LLM_PROVIDER to be set)
 - **cerebras**: Branch configured for Cerebras provider
-- **cerebras**: Branch configured for cerebras provider
+- **gemini**: Branch configured for Gemini provider
 
 To switch to a specific provider branch:
 ```bash
-git checkout cerebras  # or cerebras
+git checkout cerebras  # or gemini
 ```
 
 ## Sign up and Set LangSmith API
@@ -171,7 +171,7 @@ echo "TAVILY_API_KEY=\"$TAVILY_API_KEY\"" >> module-4/studio/.env
 - Verify your API key has the correct permissions
 - Check that the model name matches what Cerebras expects
 
-**cerebras:**
+**Gemini:**
 - Make sure you've enabled the Generative AI API in Google Cloud Console
 - Verify your API key is valid and has not expired
 - Some models may require specific regions or quotas
@@ -179,6 +179,5 @@ echo "TAVILY_API_KEY=\"$TAVILY_API_KEY\"" >> module-4/studio/.env
 ## Contributing
 
 This repository is based on the original [LangChain Academy](https://github.com/langchain-ai/langchain-academy) repository, with added multi-provider LLM support. Contributions are welcome!
-
 
 

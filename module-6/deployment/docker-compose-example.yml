@@ -40,12 +40,11 @@ services:
             REDIS_URI: redis://langgraph-redis:6379
             LLM_PROVIDER: "cerebras"
             CEREBRAS_API_KEY: "your_cerebras_api_key"
-            # Or use cerebras:
-            # LLM_PROVIDER: "cerebras"
+            # Or use Gemini:
+            # LLM_PROVIDER: "gemini"
             # GOOGLE_API_KEY: "your_google_api_key"
             LANGSMITH_API_KEY: "your_langsmith_api_key"
             POSTGRES_URI: postgres://postgres:postgres@langgraph-postgres:5432/postgres?sslmode=disable
-
 
 
 

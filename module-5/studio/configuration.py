@@ -26,4 +26,3 @@ class Configuration:
         }
         return cls(**{k: v for k, v in values.items() if v})
 
-

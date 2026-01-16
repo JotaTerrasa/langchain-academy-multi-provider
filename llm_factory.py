@@ -66,3 +66,4 @@ def _get_cerebras_llm(model: Optional[str], temperature: float) -> BaseChatModel
         temperature=temperature,
         cerebras_api_key=cerebras_api_key
     )
+

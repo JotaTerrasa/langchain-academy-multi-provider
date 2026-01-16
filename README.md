@@ -87,13 +87,13 @@ llm = get_llm(model="llama-70b", temperature=0, provider="cerebras")
 ## Repository Branches
 
 This repository has three main branches:
-- **main**: Multi-provider branch (Cerebras + Gemini)
+- **main**: Multi-provider branch (Cerebras + cerebras)
 - **cerebras**: Branch configured for Cerebras provider
-- **gemini**: Branch configured for Gemini provider
+- **cerebras**: Branch configured for cerebras provider
 
 To switch to a specific provider branch:
 ```bash
-git checkout cerebras  # or gemini
+git checkout cerebras  # or cerebras
 ```
 
 ## Sign up and Set LangSmith API
@@ -156,6 +156,7 @@ echo "TAVILY_API_KEY=\"$TAVILY_API_KEY\"" >> module-4/studio/.env
 ## Contributing
 
 This repository is based on the original [LangChain Academy](https://github.com/langchain-ai/langchain-academy) repository, with added multi-provider LLM support. Contributions are welcome!
+
 
 
 

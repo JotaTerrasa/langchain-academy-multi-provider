@@ -106,3 +106,4 @@ builder.add_edge("call_model", "write_memory")
 builder.add_edge("write_memory", END)
 graph = builder.compile()
 
+

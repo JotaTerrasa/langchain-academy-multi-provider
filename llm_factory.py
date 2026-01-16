@@ -2,14 +2,14 @@
 LLM Factory Module
 
 This module provides a factory function to create LLM instances
-for different providers: Cerebras and Gemini.
+for Google Gemini.
 
 Usage:
     from llm_factory import get_llm
     
     # Use environment variable LLM_PROVIDER to select provider
-    # Options: "cerebras", "gemini"
-    llm = get_llm(model="llama-70b", temperature=0, provider="cerebras")
+    # Options: "gemini"
+    llm = get_llm(model="gemini-pro", temperature=0, provider="gemini")
 """
 
 import os
@@ -23,79 +23,40 @@ def get_llm(
     provider: Optional[str] = None
 ) -> BaseChatModel:
     """
-    Factory function to create LLM instances for different providers.
+    Factory function to create LLM instances for Gemini.
     
     Args:
         model: Model name (provider-specific)
         temperature: Temperature for the model
-        provider: LLM provider ("cerebras", "gemini")
-                  If None, uses LLM_PROVIDER environment variable
-                  If LLM_PROVIDER is not set, raises ValueError
+        provider: LLM provider ("gemini")
+                  If None, defaults to "gemini"
     
     Returns:
         BaseChatModel instance configured for the selected provider
     """
     # Get provider from parameter or environment variable
     if provider is None:
-        provider = os.getenv("LLM_PROVIDER")
-        if provider is None:
-            raise ValueError(
-                "LLM_PROVIDER environment variable must be set. "
-                "Supported providers: 'cerebras', 'gemini'"
-            )
+        provider = os.getenv("LLM_PROVIDER", "gemini")
     
     provider = provider.lower()
     
-    if provider == "cerebras":
-        return _get_cerebras_llm(model, temperature)
-    elif provider == "gemini":
+    if provider == "gemini":
         return _get_gemini_llm(model, temperature)
-    else:
-        raise ValueError(
-            f"Unknown provider: {provider}. "
-            "Supported providers: 'cerebras', 'gemini'"
-        )
-
-
-def _get_cerebras_llm(model: Optional[str], temperature: float) -> BaseChatModel:
-    """Create Cerebras LLM instance using OpenAI-compatible API."""
-    from langchain_openai import ChatOpenAI
-    
-    # Cerebras typically provides an OpenAI-compatible API endpoint
-    cerebras_endpoint = os.getenv("CEREBRAS_API_ENDPOINT")
-    if not cerebras_endpoint:
-        raise ValueError(
-            "CEREBRAS_API_ENDPOINT environment variable is required for Cerebras. "
-            "Set it to your Cerebras API endpoint URL."
-        )
-    
-    if model is None:
-        model = os.getenv("CEREBRAS_MODEL", "llama-70b")
-    
-    cerebras_api_key = os.getenv("CEREBRAS_API_KEY")
-    if not cerebras_api_key:
-        raise ValueError(
-            "CEREBRAS_API_KEY environment variable is required for Cerebras"
-        )
-    
-    # Use ChatOpenAI with custom endpoint for Cerebras compatibility
-    return ChatOpenAI(
-        model=model,
-        temperature=temperature,
-        openai_api_base=cerebras_endpoint,
-        openai_api_key=cerebras_api_key
+    raise ValueError(
+        f"Unknown provider: {provider}. "
+        "Supported providers: 'gemini'"
     )
 
 
 def _get_gemini_llm(model: Optional[str], temperature: float) -> BaseChatModel:
     """Create Google Gemini LLM instance."""
     try:
-        from langchain_google_genai import ChatGoogleGenerativeAI
+        from llm_factory import get_llm
         
         if model is None:
             model = os.getenv("GEMINI_MODEL", "gemini-pro")
         
-        return ChatGoogleGenerativeAI(
+        return get_llm(
             model=model,
             temperature=temperature,
             google_api_key=os.getenv("GOOGLE_API_KEY")
@@ -105,3 +66,4 @@ def _get_gemini_llm(model: Optional[str], temperature: float) -> BaseChatModel:
             "Gemini integration requires langchain-google-genai. "
             "Install with: pip install langchain-google-genai"
         )
+

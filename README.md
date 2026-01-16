@@ -9,13 +9,11 @@ In each module folder, you'll see a set of notebooks. A link to the LangChain Ac
 
 ## Multi-Provider LLM Support
 
-This repository has been refactored to support multiple LLM providers:
-- **Cerebras**
-- **Google Gemini**
+This repository has been refactored to support the Cerebras LLM provider.
 
 The code uses a factory pattern (`llm_factory.py`) that allows you to switch between providers using environment variables or by specifying the provider directly.
 
-**Note:** You must set the `LLM_PROVIDER` environment variable to either "cerebras" or "gemini" before using the code.
+**Note:** This branch defaults to Cerebras. You can still set `LLM_PROVIDER="cerebras"` explicitly if you want.
 
 ## Setup
 
@@ -78,20 +76,6 @@ export CEREBRAS_MODEL="llama-70b"  # Optional, defaults to llama-70b
 
 **Note:** Cerebras uses an OpenAI-compatible API endpoint. Make sure your endpoint URL points to the `/v1` path.
 
-### Using Google Gemini
-
-Set the following environment variables:
-```bash
-export LLM_PROVIDER="gemini"
-export GOOGLE_API_KEY="your-google-api-key"
-export GEMINI_MODEL="gemini-pro"  # Optional, defaults to gemini-pro
-```
-
-To get a Google API key:
-1. Go to [Google AI Studio](https://makersuite.google.com/app/apikey)
-2. Create a new API key
-3. Set it in your environment
-
 ### Switching Providers in Code
 
 You can also specify the provider directly in your code:
@@ -101,15 +85,12 @@ from llm_factory import get_llm
 
 # Use Cerebras
 llm = get_llm(model="llama-70b", temperature=0, provider="cerebras")
-
-# Use Gemini
-llm = get_llm(model="gemini-pro", temperature=0, provider="gemini")
 ```
 
 ## Repository Branches
 
 This repository has three main branches:
-- **main**: Default branch (requires LLM_PROVIDER to be set)
+- **main**: Multi-provider branch (Cerebras + Gemini)
 - **cerebras**: Branch configured for Cerebras provider
 - **gemini**: Branch configured for Gemini provider
 
@@ -174,10 +155,6 @@ echo "TAVILY_API_KEY=\"$TAVILY_API_KEY\"" >> module-4/studio/.env
 - Verify your API key has the correct permissions
 - Check that the model name matches what Cerebras expects
 
-**Gemini:**
-- Make sure you've enabled the Generative AI API in Google Cloud Console
-- Verify your API key is valid and has not expired
-- Some models may require specific regions or quotas
 
 ## Contributing
 

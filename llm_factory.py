@@ -96,3 +96,4 @@ def _get_gemini_llm(model: Optional[str], temperature: float) -> BaseChatModel:
             "Install with: pip install langchain-google-genai"
         )
 
+
